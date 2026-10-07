@@ -27,4 +27,4 @@ mvn test
 # WEBHOOK PIPELINE TEST
 # I hope it builds..
 # I hope it builds again..
-# Testing Jenkins alerts using Discord(ya rab teshtaghal)
+# Testing Jenkins alerts using Discord(ya rab teshtaghal tany)
