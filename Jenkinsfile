@@ -1,30 +1,23 @@
 pipeline {
     agent any
+    environment {
+        MAVEN_HOME = "${WORKSPACE}/apache-maven-3.9.12"
+    }
     stages {
         stage('Install Maven') {
             steps {
                 sh '''
                 echo "Installing Maven 3.9.12"
-                rm -rf /opt/maven
-                cd /tmp
-                wget https://downloads.apache.org/maven/maven-3/3.9.12/binaries/apache-maven-3.9.12-bin.tar.gz
-                tar -xzf apache-maven-3.9.12-bin.tar.gz
-                mv apache-maven-3.9.12 /opt/maven
-                chown -R jenkins:jenkins /opt/maven
-                /opt/maven/bin/mvn -version
+                curl -fsSL -o maven.tar.gz https://archive.apache.org/dist/maven/maven-3/3.9.12/binaries/apache-maven-3.9.12-bin.tar.gz
+                tar -xzf maven.tar.gz
+                $MAVEN_HOME/bin/mvn -version
                 '''
-            }
-        }
-
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/madhuri75jha/simple-order-processing-app.git'
             }
         }
 
         stage('Build with Maven') {
             steps {
-                sh '/opt/maven/bin/mvn clean package -Dmaven.test.failure.ignore=true'
+                sh '$MAVEN_HOME/bin/mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
     }
