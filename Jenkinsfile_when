@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(
+            name: 'Deploy_Env',
+            defaultValue: 'dev',
+            description: 'Clarify the desired environment'
+        )
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building application code..'
+            }
+        }
+        stage('Tests') {
+            when {
+                expression { params.Deploy_Env != 'prod' }
+            }
+            steps {
+                echo 'Running Unit Tests..'
+            }
+        }
+        stage('Deploy') {
+            when {
+                expression { params.Deploy_Env == 'prod' }
+            }
+            steps {
+                echo 'Running Deployment steps on Production..'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline ran successfully!'
+        }
+        failure {
+            echo 'Pipeline failed..'
+        }
+    }
+}
