@@ -28,3 +28,4 @@ mvn test
 # I hope it builds..
 # I hope it builds again..
 # Testing Jenkins alerts using Discord(ya rab teshtaghal) PLS.
+# IM gonna finish this shi finally
