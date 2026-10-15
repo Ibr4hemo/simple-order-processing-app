@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Integration') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Ibr4hemo/simple-order-processing-app.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building Code..'
+                sh 'ls -l'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline Ran successfully!!'
+        }
+        failure {
+            echo 'Pipeline Run Error..'
+        }
+    }
+}
